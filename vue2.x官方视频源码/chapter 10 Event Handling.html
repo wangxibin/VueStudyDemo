@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div id="example-1">
+				<!-- 监听事件 -->
+				<button v-on:click="counter += 1">直接写表达式，数值 : {{ counter }} </button>
+				<!-- 事件处理方法 -->
+				<button v-on:dblclick="greet('绑定一个方法', $event)">绑定一个方法</button>
+				<!-- 内联处理器中的方法 -->
+				<button v-on:click="say('hi')">Say hi</button>
+				<button v-on:click="say('what')">Say what</button>
+				<!-- 访问原始的 DOM 事件。可以用特殊变量 $event -->
+				<button v-on:click="warn('Form cannot be submitted yet.', $event)">
+					Submit
+				</button>
+				<!-- 事件修饰符 -->
+				<div>
+					<div @click="fatherClick('父布局点击事件...')">
+						<!-- 默认不阻止事件冒泡 -->
+						<button v-on:click="doThisNotStopPropagation">子布局不阻止冒泡</button>
+						<!-- 阻止事件冒泡 -->
+						<button v-on:click.stop="clickStop('子布局使用stop阻止点击事件冒泡...')">子布局使用stop阻止点击事件冒泡</button>
+					</div>
+					<!-- 不阻止默认事件发生 -->
+					<a href="http://www.baidu.com">不阻止默认事件发生</a>
+					<!-- 阻止默认事件发生 -->
+					<a href="http://www.baidu.com" v-on:click.prevent="clickPrevent">阻止默认事件发生</a>
+					<!-- 修饰符可以串联 -->
+					<a href="http://www.baidu.com" v-on:click.stop.prevent="doThat">修饰符可以串联</a>
+					<!-- 只有修饰符 -->
+					<a href="http://www.baidu.com" v-on:click.prevent>只有修饰符</a>
+					<!-- 添加事件监听器时使用事件捕获模式 -->
+					<!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+					<div @click.capture="clickCapture" :style="{'background':'#23A6E9',padding:'0.5rem'}">
+						<button v-on:click="childClick" :style="{'margin-top':0}">事件捕捉模式</button>
+					</div>
+					<!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+					<!-- 即事件不是从内部元素触发的 -->
+					<div @click.self="clickSelf" :style="{'background':'#23A6E9',padding:'0.5rem'}">
+						<button v-on:click="childClick" :style="{'margin-top':0}">自身触发</button>
+					</div>
+					<!-- 点击事件将只会触发一次 -->
+					<button v-on:click.once="clickOne">事件只触发一次</button>
+					<!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+					<!-- 而不会等待 `onScroll` 完成  -->
+					<!-- 这其中包含 `event.preventDefault()` 的情况 -->
+					<div v-on:scroll="onScroll" :style="{'height':'5rem',overflow:'scroll',background:'#23A6E9'}">
+						<a href="http://www.baidu.com">百度</a>
+						<a href="http://www.taobao.com">淘宝</a>
+						<a href="http://www.jingdong.com">京东</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					counter: 0,
+					name: "Vue.js"
+				},
+				// 在 `methods` 对象中定义方法
+				methods: {
+					greet: function(msg, event) {
+						// `this` 在方法里指向当前 Vue 实例
+						alert('Hello ' + this.name + '!')
+						// `event` 是原生 DOM 事件
+						if (event) {
+							console.log(event)
+						}
+					},
+					say: function(message) {
+						alert(message)
+					},
+					// 访问原始的 DOM 事件。可以用特殊变量 $event
+					warn: function(message, event) {
+						// 现在我们可以访问原生事件对象
+						if (event) {
+							event.preventDefault()
+						}
+						alert(message)
+					},
+					fatherClick: function(msg) {
+						alert('Vue.js=>fatherClick()=>父布局响应了点击事件...');
+						console.log('Vue.js=>fatherClick()=>父布局响应了点击事件...');
+					},
+					doThisNotStopPropagation: function() {
+						alert('Vue.js=>doThisNotStopPropagation()=>子布局不阻止冒泡...');
+						console.log('Vue.js=>doThisNotStopPropagation()=>子布局不阻止冒泡...');
+					},
+					clickStop: function(message) {
+						alert('Vue.js=>doThisNotStopPropagation()=>' + message);
+						console.log('Vue.js=>doThisNotStopPropagation()=>' + message);
+					},
+					clickPrevent: function() {
+						alert('Vue.js=>clickPrevent()=>');
+						console.log('Vue.js=>clickPrevent()=>');
+					},
+					doThat: function() {
+						alert('Vue.js=>doThat()=>修饰符可以串联，先stop阻止冒泡，然后prevent阻止默认事件');
+						console.log('Vue.js=>doThat()=>修饰符可以串联，先stop阻止冒泡，然后prevent阻止默认事件');
+					},
+					clickCapture: function() {
+						alert('Vue.js=>clickCapture()=>事件捕获模式，拦截到内部元素优先处理，然后再让内部元素处理...');
+						console.log('Vue.js=>clickCapture()=>事件捕获模式，拦截到内部元素优先处理，然后再让内部元素处理...');
+					},
+					clickSelf: function() {
+						alert('Vue.js=>clickSelf()=>只有元素是自身时才触发，即事件不是从内部元素触发的...');
+						console.log('Vue.js=>clickSelf()=>只有元素是自身时才触发，即事件不是从内部元素触发的...');
+					},
+					clickOne: function() {
+						alert('Vue.js=>clickOne()=>元素点击事件只触发一次...');
+						console.log('Vue.js=>clickOne()=>元素点击事件只触发一次...');
+					},
+					childClick: function() {
+						alert('Vue.js=>childClick()=>点击了子布局...');
+						console.log('Vue.js=>childClick()=>点击了子布局...');
+					},
+					onScroll: function() {
+						console.log('Vue.js=>onScroll()=>在滚动中...');
+					}
+				}
+			});
+			// 也可以用 JavaScript 直接调用方法
+			vm.greet() // => 'Hello Vue.js!'
+		</script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+				overflow: scroll;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+
+			button,
+			a {
+				display: block;
+				margin-top: 1rem;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+				height: 0;
+			}
+		</style>
+	</body>
+</html>

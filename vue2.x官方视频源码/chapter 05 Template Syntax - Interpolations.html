@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h2>{{msg}}</h2>
+			<p>Using mustaches: {{ rawHtml }}</p>
+			<p v-html="rawHtml"></p>
+			<div v-bind:class="color">test...</div>
+			<p>{{ number + 1 }}</p>
+			<p>{{ 1 == 1 ? 'YES' : 'NO' }}</p>
+			<p>{{ message.split('').reverse().join('') }}</p>
+			<a v-bind:[attributeone]="url">v-bind:href</a>
+			<p v-bind:[attributestyle]="styleStr">v-bind:style</p>
+			<p v-bind:[attributenull]="url">v-bind:null</p>
+			<p v-bind:[attributenotstring]="url">v-bind:0</p>
+			<p>{{ message.split('').reverse().join('') }}</p>
+			<a v-bind:[attributestyle + attributeone]="value"> ... </a>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					msg: "hi vue",
+					rawHtml: '<h2 style="color:red">this is should be red</span>',
+					color: 'blue',
+					number: 10,
+					ok: 1,
+					message: "vue",
+					attributeone: 'href',
+					attributestyle: 'style',
+					attributenull: null,
+					attributenotstring: 0,
+					url: 'http://www.baidu.com',
+					styleStr:'color:#23A6E9'
+				}
+			});
+			vm.msg = "hi....";
+		</script>
+		<style type="text/css">
+			.red {
+				color: red;
+			}
+
+			.blue {
+				color: blue;
+				font-size: 100px;
+			}
+		</style>
+	</body>
+</html>

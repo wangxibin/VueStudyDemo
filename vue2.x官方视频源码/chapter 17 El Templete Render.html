@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app-1">
+			{{msg}}
+		</div>
+		================
+		<div id="app-2">
+			{{msg}}
+		</div>
+		=================
+		<div id="app-3">
+			{{msg}}
+		</div>
+
+		<script>
+			// 在vue.js中，可以使用template给元素添加模板，但是元素中只能有一个根元素，
+			// 不能出现两个或两个以上的根同级元素。还可以在模板中绑定数据、表达式等。下面利用实例说明如何添加模板
+			// 创建 Vue 实例，得到 ViewModel
+			new Vue({
+				el: '#app-1',
+				data: {
+					msg: '这是通过el属性获取挂载元素的outerHTML方式渲染'
+				}
+			});
+			// 结论:如果vue实例中有template属性，会将该属性值进行编译，
+			// 将编译后的虚拟dom直接替换掉vue实例绑定的元素（即el绑定的那个元素);
+			// 注意:template属性中的dom结构只能有一个根元素，
+			// 如果有多个根元素需要使用v-if、v-else、v-else-if设置成只显示其中一个根元素；
+			new Vue({
+				el: '#app-2',
+				data: {
+					msg: '这是通过el属性获取挂载元素的outerHTML方式渲染'
+				},
+				template: '<div>这是template属性模板渲染</div>'
+			});
+			// render 
+			new Vue({
+				el: '#app-3',
+				data: {
+					msg: '这是通过el属性获取挂载元素的outerHTML方式渲染'
+				},
+				template: '<div>这是template属性模板渲染</div>',
+				render: function(createElement) {
+					return createElement('div',
+						// 参数2、这里相当于给标签加属性 例如：<div style='color:red,font-size: 14px'></div>
+						{
+							//给div绑定样式
+							style: {
+								width: '300px',
+								height: '400px',
+								color: 'pink'
+							},
+							//给div绑定点击事件　　
+							on: {
+								click: () => {
+									console.log('点击事件')
+								}
+							}
+						},
+						// 参数3、参数中渲染的标签的子元素数组（可选） 
+						// [
+						//    // 文本节点直接写就可以
+						//    'text'
+						// ]
+						'这是render属性方式渲染。'
+					);
+				}
+			});
+		</script>
+		<style type="text/css">
+
+		</style>
+	</body>
+</html>

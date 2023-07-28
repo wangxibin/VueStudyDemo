@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<!-- for in 遍历数组 -->
+			<span>
+				for in 遍历数组
+			</span>
+			<ul>
+				<li v-for="item, index in items">
+					{{parentMessage}}-{{ index }}-{{ item.message }}
+				</li>
+			</ul>
+			<!-- for of 遍历数组-->
+			<span>
+				for of 遍历数组
+			</span>
+			<ul>
+				<li v-for="item, index of items">
+					{{parentMessage}}-{{ index }}-{{ item.message }}
+				</li>
+			</ul>
+			<!-- 就地更新策略 -->
+			<span>
+				就地更新策略
+			</span>
+			<ul>
+				<li v-for="(item,index) in list" :class="item.name">
+					{{item.id}}
+					<input type="text" :placeholder="item.name">
+					<button v-on:click="deleteLi(index)">删除</button>
+				</li>
+			</ul>
+			<!-- 不使用就地更新策略 -->
+			<span>
+				不使用就地更新策略
+			</span>
+			<ul>
+				<li v-for="(item,index) in list" :class="item.name">
+					{{item.id}}
+					<input type="text" :placeholder="item.name" v-bind:key="item.id">
+					<button v-on:click="deleteLi(index)">删除</button>
+				</li>
+			</ul>
+			<!-- for in 遍历对象 -->
+			<span>
+				for in 遍历对象
+			</span>
+			<ul>
+				<li v-for="value, key in object">
+					{{parentMessage}}-{{ key }}-{{ value }}
+				</li>
+			</ul>
+			<!-- for of 遍历对象 -->
+			<span>
+				for of 遍历对象
+			</span>
+			<ul>
+				<li v-for="value, key of object">
+					{{parentMessage}}-{{ key }}-{{ value }}
+				</li>
+			</ul>
+			<!-- for in 遍历对象 -->
+			<span>
+				for in (value, key, index) 遍历对象
+			</span>
+			<ul>
+				<li v-for="value, key, index in object">
+					{{index}}.{{parentMessage}}:{{ key }}:{{ value }}
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					parentMessage: 'Parent',
+					items: [{
+							message: 'Foo'
+						},
+						{
+							message: 'Bar'
+						}
+					],
+					list: [{
+						name: 'hello',
+						id: 1
+					}, {
+						name: 'world',
+						id: 2
+					}],
+					object: {
+						title: 'How to do lists in Vue',
+						author: 'Jane Doe',
+						publishedAt: '2016-04-10'
+					}
+				},
+				methods: {
+					deleteLi(index) {
+						this.list.splice(index, 1)
+					}
+				}
+			});
+		</script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+
+			span {
+				display: inline-block;
+			}
+		</style>
+	</body>
+</html>

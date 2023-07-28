@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.box1 {
+				display: none;
+			}
+
+			.box2 {
+				background: pink;
+				width: 100px;
+				height: 100px;
+				opacity: 1;
+				margin-left: 0;
+			}
+
+			/*CSS3的transition属性：
+            当它进入过渡的时候（隐藏→显示），就会依次发生：
+                1. 添加.box-enter
+                2.  删除.box-enter，添加 .box-enter-active
+                3.  删除.box-enter-active
+             当它离开过渡的时候（显示→隐藏），就会依次发生：
+                1. 添加.box-leave
+                2. 删除.box- leave，添加 .box- leave-active
+                3. 删除.box- leave -active
+        */
+
+			.box2-enter-active,
+			.box2-leave-active {
+				transition: all 0.8s;
+			}
+
+			.box2-enter {
+				margin-left: 100%;
+				opacity: 0;
+			}
+
+			.box2-leave {
+				margin-left: 0;
+				opacity: 1;
+			}
+
+			.box2-leave-active {
+				margin-left: 100%;
+				opacity: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button @click="showBox=!showBox;hideBox=!hideBox" class="btn">切换</button>
+			<div class="container" style="width:100px;overflow:hidden;">
+
+				<!--vue.js中的transition组件配合CSS3的动画知识，轻松实现过渡效果
+            注意CSS3的transition属性与vue.js中的transition组件仅名字相同，是完全不同的东西-->
+				<transition name="box2">
+					<!--方法一：通过v-show指令控制显示/隐藏-->
+					<div class="box2" v-show="showBox">方法一</div>
+				</transition>
+
+				<!--方法二：动态添加class属性控制显示/隐藏-->
+				<div :class="{'box1':hideBox}"
+					style="background: #0A7EC3;width:100px;height:100px; margin-bottom:20px;">方法二</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		let app = new Vue({
+			el: "#app",
+			data: {
+				hideBox: false,
+				showBox: true,
+			},
+		});
+	</script>

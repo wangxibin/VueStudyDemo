@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div v-if="type === 'v-if'">
+				v-if
+			</div>
+			<div v-else-if="type === 'v-else-if'">
+				v-else-if
+			</div>
+			<div v-else-if="type === 'v-else-if'">
+				v-else-if
+			</div>
+			<div v-else>
+				v-else
+			</div>
+			<h1 v-show="ok">Hello!</h1>
+			<template v-if="loginType === 'username'">
+			  <label>Username</label>
+			  <input placeholder="Enter your username">
+			</template>
+			<template v-else>
+			  <label>Email</label>
+			  <input placeholder="Enter your email address">
+			</template>
+			<template v-if="loginType === 'username'">
+			  <label>Username</label>
+			  <input placeholder="Enter your username" key="username-input">
+			</template>
+			<template v-else>
+			  <label>Email</label>
+			  <input placeholder="Enter your email address" key="email-input">
+			</template>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					type: "v-if",
+					ok: false,
+					loginType:'username'
+				}
+			});
+		</script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+		</style>
+	</body>
+</html>

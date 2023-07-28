@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container">
+			// 基础展示
+			<div id="components-demo">
+				<!-- 组件的复用，你可以将组件进行任意次数的复用 -->
+				<button-counter></button-counter>
+				<button-counter></button-counter>
+				<button-counter></button-counter>
+				<button-counter></button-counter>
+				<blog-post title="My journey with Vue"></blog-post>
+				<blog-post title="Blogging with Vue"></blog-post>
+				<blog-post title="Why Vue is so fun"></blog-post>
+			</div>
+			// 父子组件传值
+			<div id="blog-post-demo">
+				<blog-post v-for="item in posts" :title="item">
+				</blog-post>
+				<blog-post-2 v-for="item in posts2" :post="item">
+				</blog-post-2>
+			</div>
+			// 监听子组件事件
+			<div id="blog-posts-events-demo">
+				<div :style="{ fontSize: postFontSize + 'em' }">
+					<blog-post-3 v-for="post in posts" v-bind:post="post" v-on:enlarge-text="postFontSize += $event">
+					</blog-post-3>
+					<blog-post-3 v-for="post in posts" v-bind:post="post" v-on:enlarge-text="onEnlargeText">
+					</blog-post-3>
+				</div>
+			</div>
+			// 父子组件之间使用v-model
+			<div id="posts-events-model">
+				<custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>
+			</div>
+			// 通过插槽分发内容
+			<div id="slot-model">
+				<alert-box>
+				  Something bad happened.
+				</alert-box>
+			</div>
+		</div>
+		<!-- <div id="app">
+			<button-counter title="title1 : " @clicknow="clicknow">
+				<h2>hi...h2</h2>
+			</button-counter>
+			<button-counter title="title2 : "></button-counter>
+		</div> -->
+		<script type="text/javascript">
+			// 定义一个名为 button-counter 的新组件
+			// 基本示例
+			// 全局注册
+			Vue.component('button-counter', {
+				// Data必须是一个函数，
+				data: function() {
+					return {
+						count: 0
+					}
+				},
+				template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+			});
+
+			// 父子组件之间传值，传递基础类型
+			Vue.component('blog-post', {
+				props: ['title'],
+				template: '<h3>{{ title }}</h3>'
+			});
+
+			// 父子组件之间传值，传递对象类型
+			Vue.component('blog-post-2', {
+				props: ['post'],
+				template: '<div class="blog-post"><h3>{{ post.title }}</h3><div v-html="post.content"></div></div>'
+			});
+
+			// 监听子组件事件
+			Vue.component('blog-post-3', {
+				props: ['post'],
+				template: `
+			    <div class="blog-post">
+			      <h3>{{ post.title }}</h3>
+				  <button v-on:click="$emit('enlarge-text',0.1)">
+					Enlarge text
+				  </button>
+			      <div v-html="post.content"></div>
+			    </div>
+			  `
+			});
+
+			// 在组件上使用v-model
+			Vue.component('custom-input', {
+				props: ['value'],
+				template: `
+				<input
+				v-bind:value="value"
+				v-on:input="$emit('input', $event.target.value)"
+				> `
+			});
+
+			// 通过插槽分发内容
+			Vue.component('alert-box', {
+				template: `
+			    <div class="demo-alert-box">
+			      <strong>Error!</strong>
+			      <slot></slot>
+			    </div>
+			  `
+			})
+
+			// 基本示例
+			const vm = new Vue({
+				el: '#components-demo'
+			})
+
+			//父子组件传值
+			new Vue({
+				el: '#blog-post-demo',
+				data: {
+					posts: [{
+							id: 1,
+							title: 'My journey with Vue'
+						},
+						{
+							id: 2,
+							title: 'Blogging with Vue'
+						},
+						{
+							id: 3,
+							title: 'Why Vue is so fun'
+						}
+					],
+					posts2: [{
+							id: 4,
+							title: 'My journey with Vue',
+							content: 'My journey with Vue so good',
+						},
+						{
+							id: 5,
+							title: 'Blogging with Vue',
+							content: 'Blogging with Vue so good',
+						},
+						{
+							id: 6,
+							title: 'Why Vue is so fun',
+							content: 'Why Vue is so fun so good',
+						}
+					]
+				}
+			})
+
+			// 监听子组件事件
+			new Vue({
+				el: '#blog-posts-events-demo',
+				data: {
+					posts: [{
+							id: 4,
+							title: 'My journey with Vue',
+							content: 'My journey with Vue so good',
+						},
+						{
+							id: 5,
+							title: 'Blogging with Vue',
+							content: 'Blogging with Vue so good',
+						},
+						{
+							id: 6,
+							title: 'Why Vue is so fun',
+							content: 'Why Vue is so fun so good',
+						}
+					],
+					postFontSize: 0.5
+				},
+				methods: {
+					onEnlargeText: function(enlargeAmount) {
+						this.postFontSize += enlargeAmount
+					}
+				}
+			});
+
+			// 在组件上使用v-model
+			new Vue({
+				el: '#posts-events-model',
+				data: {
+					searchText: "在组件上使用v-model"
+				},
+				watch: {
+					searchText(newValue, oldValue) {
+						console.log(newValue, oldValue);
+					}
+				}
+			});
+
+			// 在组件上使用v-model
+			new Vue({
+				el: '#slot-model',
+				data: {
+					searchText: "在组件上使用v-model"
+				},
+				watch: {
+					searchText(newValue, oldValue) {
+						console.log(newValue, oldValue);
+					}
+				}
+			});
+			// Vue.component('button-counter', {
+			// 	props: ['title'],
+			// 	data: function () {
+			// 		return {
+			// 		  count: 0
+			// 		}
+			// 	},
+			// 	template: '<div><h1>hi...</h1><button v-on:click="clickfun">{{title}} You clicked me {{ count }} times.</button><slot></slot></div>',
+			// 	methods:{
+			// 		clickfun : function () {
+			// 			this.count ++;
+			// 			this.$emit('clicknow', this.count);
+			// 		}
+			// 	}
+			// })
+			// var vm = new Vue({
+			// 	el : "#app",
+			// 	data : {
+
+			// 	},
+			// 	methods:{
+			// 		clicknow : function (e) {
+			// 			console.log(e);
+			// 		}
+			// 	}
+			// });
+		</script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+				overflow: scroll;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+
+			button,
+			a {
+				display: block;
+				margin-top: 1rem;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+				height: 0;
+			}
+		</style>
+	</body>
+</html>

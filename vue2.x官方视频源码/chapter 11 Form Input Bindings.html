@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div id="example-1">
+				<!-- 文本 -->
+				<input :style="{'width':'15rem'}" v-model="message" placeholder="请输入...">
+				<br>
+				<!-- lazy修饰符 -->
+				<input  :style="{'width':'15rem'}" v-model.lazy="message" placeholder="Change事件触发时同步数据...">
+				<br>
+				<!-- number修饰符 -->
+				<input  :style="{'width':'15rem'}" v-model.number="message" placeholder="自动转换为number类型...">
+				<br>
+				<!-- trim修饰符 -->
+				<input  :style="{'width':'15rem'}" v-model.trim="message" placeholder="去掉首尾的空白字符串...">
+				<br>
+				<span>message: {{ message }}</span>
+				<br>
+				<span>message的类型: {{ typeof(message) }}</span>
+				<p>文本内容： {{ message }}</p>
+				<!-- 多行文本 -->
+				<textarea v-model="moreMessage" placeholder="请输入多行文本..."></textarea>
+				<p style="white-space: pre-line;">{{ moreMessage }}</p>
+				<!-- 复选框 -->
+				<!-- 单个复选框，绑定到布尔值 -->
+				<div style="margin-top:20px;">
+					<input type="checkbox" id="checkbox" v-model="singleChecked">
+					<span for="checkbox">{{singleChecked}}</span>
+				</div>
+				<!-- 多个复选框，绑定到同一个数组 -->
+				<div style="margin-top:20px;">
+					<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+					<label for="jack">Jack</label>
+					<input type="checkbox" id="john" value="John" v-model="checkedNames">
+					<label for="john">John</label>
+					<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+					<label for="mike">Mike</label>
+					<br>
+					<span>Checked names: {{ checkedNames }}</span>
+				</div>
+				<!-- 单选框 -->
+				<div style="margin-top:20px;">
+					<input type="radio" id="one" value="one" v-model="singleRadio">
+					<label for="one">one</label>
+					<br>
+					<input type="radio" id="two" value="two" v-model="singleRadio">
+					<label for="two">two</label>
+					<br>
+					<span>Picked: {{ singleRadio }}</span>
+				</div>
+				<!-- 选择框 -->
+				<!-- 单选时： -->
+				<div style="margin-top:20px;">
+					<select v-model="selected">
+						<option disabled value="">请选择</option>
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+					</select>
+					<span>Selected: {{ selected }}</span>
+				</div>
+				<!-- 多选是： -->
+				<div style="margin-top:20px;">
+					<select v-model="mutiSelected" multiple style="width: 50px;">
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+					</select>
+					<br>
+					<span>Selected: {{ mutiSelected }}</span>
+				</div>
+				<!-- v-for渲染的动态选项  -->
+				<div style="margin-top:20px;">
+					<select v-model="vForSelected">
+						<option v-for="option in vForOptions" v-bind:value="option.value">
+							{{ option.text }}
+						</option>
+					</select>
+					<span>Selected: {{ vForSelected }}</span>
+				</div>
+				<!-- 使用v-bind动态绑定value  -->
+				<div style="margin-top:20px;">
+					<input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+					<span>使用true-value和false-value设置: {{ toggle }}</span>
+				</div>
+				<!-- 使用v-bind动态绑定value  -->
+				<div style="margin-top:20px;">
+					<input type="radio" v-model="radioBindModel" v-bind:value="radioBindValue">
+					<span>动态绑定value: {{ radioBindModel }}</span>
+				</div>
+				<!-- 使用v-bind动态绑定value  -->
+				<div style="margin-top:20px;">
+					<select v-model="selectObj">
+						<!-- 内联对象字面量 -->
+						<option v-bind:value="{ number: 123 }">123</option>
+					</select>
+					<span>用对象动态绑定value: {{ selectObj }}</span>
+				</div>
+				<button type="button" @click="submit">提交</button>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					message: "",
+					moreMessage: "多行文本",
+					singleChecked: false,
+					checkedNames: ['Jack', 'John'],
+					singleRadio: "one",
+					selected: "A",
+					mutiSelected: [],
+					vForSelected: 'A',
+					vForOptions: [{
+							text: 'One',
+							value: 'A'
+						},
+						{
+							text: 'Two',
+							value: 'B'
+						},
+						{
+							text: 'Three',
+							value: 'C'
+						}
+					],
+					toggle: '',
+					radioBindValue: 'radioBindValue',
+					radioBindModel: 'radioBindModel',
+					selectObj: {}
+				},
+				methods: {
+					submit: function() {
+						console.log(this.message);
+
+					}
+				}
+			});
+		</script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+				overflow: scroll;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+
+			button,
+			a {
+				display: block;
+				margin-top: 1rem;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+				height: 0;
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" class="container">
+			<!-- class -->
+			<!-- 使用原生 -->
+			<div class="coomon-class active">1、原生css设置class</div>
+			<!-- 使用变量，该变量存放的是class名，string类型的变量 -->
+			<div :class="classObj.active">2、vue使用一个“字符串变量设置”设置class</div>
+			<!-- 使用数组，数组中是存放class名的变量，string类型的变量 -->
+			<div :class="[classObj.commonClass, classObj.active]">3、vue使用一个“存放字符串变量的数组”设置class</div>
+			<!-- 使用数组，数组中是存放的是class名，string字符串 -->
+			<div :class="['common-class', 'active']">4、vue使用一个“存放字符串的数组”设置class</div>
+			<!-- 使用数组和三目运算符 -->
+			<div :class="[ isCommonClass ? 'common-class' : '', isActive ? 'active' : '']">
+				5、vue使用一个“数组和三目运算符”设置class
+			</div>
+			<!-- 使用对象，对象中key是class名，value是boolean值或者变量 -->
+			<div :class="{'common-class':true,'active':true}">6、vue使用对象设置class，key是class名，value是布尔值</div>
+			<!-- 使用对象，对象中key是class名，不支持以“-”拼接，value是boolean值或者变量 -->
+			<div :class="{commonClass:true,active:true}">7、vue使用对象设置class，key是class名，不支持以“-”拼接，value是布尔值</div>
+			<!-- 使用对象，对象中key是多个class名，value是boolean值或者变量 -->
+			<div :class="{'common-class active':true}">8、vue使用对象设置class，key是多个class名，value是布尔值</div>
+			<!-- 使用表达式，对象中key是多个class名，value是boolean值或者变量 -->
+			<div :class="isActive ? 'active' : ''">9、vue使用表达式设置class</div>
+			<!-- 使用表达式，对象中key是多个class名，value是boolean值或者变量 -->
+			<div :class="classObj">9、vue使用对象变量设置class</div>
+
+			<!-- style -->
+			<!-- 使用原生 -->
+			<div style="background: #23A6E9;margin-top: 2rem;">
+				1、原生css设置style属性
+			</div>
+			<div :style="{color:color, fontSize:size, background: isRed ? '#23A6E9' : ''}">
+				2、vue使用变量来设置style属性，变量不能使用kebab-case（烤肉串）格式
+			</div>
+			<div :style="{color:'#FFFFFF', fontSize:'16px', background:'#23A6E9'}">
+				3、vue使用字符串来设置style属性
+			</div>
+			<div :style="styleObj">
+				4、vue使用对象来设置style属性
+			</div>
+			<div :style="[styleObj,styleObj1]">
+				5、vue使用数组存放对象设置style属性
+			</div>
+			<div
+				:style="{ display: ['-webkit-box', '-ms-flexbox', 'block'],
+				color:'#FFFFFF', fontSize:'16px', background:'#23A6E9' }">
+				6、vue使用多重值存放对象设置style属性
+			</div>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					isActive: true,
+					isCommonClass: true,
+					color: "#FFFFFF",
+					size: '16px',
+					isRed: true,
+					// 存放样式
+					classObj: {
+						active: 'active',
+						commonClass: 'common-class'
+					},
+					styleObj: {
+						color: '#FFFFFF',
+						fontSize: '16px',
+						background: '#23A6E9'
+					},
+					styleObj1: {
+						color: '#FFFFFF',
+						fontSize: '16px',
+						background: '#23A6E9'
+					}
+				}
+			});
+		</script>
+		<style>
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				height: 667px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				margin-top: calc(-667px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+		</style>
+	</body>
+</html>
