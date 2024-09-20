@@ -29,7 +29,7 @@ var vm = new Vue({
 	beforeMount : function(){
 		console.log('beforeMount');
 	},
-	//el 被新创建的 vm.$el 替换, 挂在成功	
+	//el 被新创建的 vm.$el 替换, 挂载成功	
 	mounted : function(){
 		console.log('mounted');
 	},
@@ -44,7 +44,12 @@ var vm = new Vue({
 		console.log('updated');
 		console.log(vm.$data);
 		console.log(vm.$el);		
-	}
+	},
+	watch: {
+		'msg':(newValue, oldValue)=> {
+			console.log(newValue,oldValue);
+		}
+	},
 });
 setTimeout(function(){
 	vm.msg = "change ......";

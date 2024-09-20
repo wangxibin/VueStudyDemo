@@ -7,6 +7,10 @@
 	</head>
 	<body>
 		<div class="container">
+			<div id="app">
+				<button-counter></button-counter>
+				<button-counter></button-counter>
+			</div>
 			// 基础展示
 			<div id="components-demo">
 				<!-- 组件的复用，你可以将组件进行任意次数的复用 -->
@@ -17,6 +21,12 @@
 				<blog-post title="My journey with Vue"></blog-post>
 				<blog-post title="Blogging with Vue"></blog-post>
 				<blog-post title="Why Vue is so fun"></blog-post>
+				<blog-post title="Why Vue is so fun"></blog-post>
+			</div>
+			// 局部组件
+			<div id="components-part">
+				<component-a></component-a>
+				<component-b></component-b>
 			</div>
 			// 父子组件传值
 			<div id="blog-post-demo">
@@ -41,16 +51,10 @@
 			// 通过插槽分发内容
 			<div id="slot-model">
 				<alert-box>
-				  Something bad happened.
+					Something bad happened.
 				</alert-box>
 			</div>
 		</div>
-		<!-- <div id="app">
-			<button-counter title="title1 : " @clicknow="clicknow">
-				<h2>hi...h2</h2>
-			</button-counter>
-			<button-counter title="title2 : "></button-counter>
-		</div> -->
 		<script type="text/javascript">
 			// 定义一个名为 button-counter 的新组件
 			// 基本示例
@@ -64,11 +68,21 @@
 				},
 				template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
 			});
+			
+			Vue.component('buttoncounter2', {
+				// Data必须是一个函数，
+				data: function() {
+					return {
+						count: 0
+					}
+				},
+				template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+			});
 
 			// 父子组件之间传值，传递基础类型
 			Vue.component('blog-post', {
 				props: ['title'],
-				template: '<h3>{{ title }}</h3>'
+				template: '<h3>{{ title}}</h3>'
 			});
 
 			// 父子组件之间传值，传递对象类型
@@ -111,12 +125,52 @@
 			  `
 			})
 
-			// 基本示例
-			const vm = new Vue({
-				el: '#components-demo'
+			// 局部注册组件
+			const ComponentA = {
+				template: `
+				 <div>局部注册组件ComponentA</div>
+				`
+			}
+			const ComponentB = {
+				components:{
+					ComponentA
+				},
+				template: `
+				<div>
+				 <ComponentA></ComponentA>
+				 <div>局部注册组件ComponentB</div>
+				 </div>
+				`
+			}
+			const ComponentC = {
+				template: `
+				 <div>局部注册组件ComponentC</div>
+				`
+			}
+			
+			// App
+			const app = new Vue({
+				el: '#app',
+				template: `
+				 <div>App</div>
+				`
 			})
 
-			//父子组件传值
+			// 基本示例
+			const vm = new Vue({
+				el: '#components-demo',
+			})
+
+			// 使用局部注册的组件
+			const vmPartComponent = new Vue({
+				el: '#components-part',
+				components: {
+					'component-a': ComponentA,
+					'component-b': ComponentB
+				}
+			})
+			
+			// 父子组件传值
 			new Vue({
 				el: '#blog-post-demo',
 				data: {
@@ -206,32 +260,6 @@
 					}
 				}
 			});
-			// Vue.component('button-counter', {
-			// 	props: ['title'],
-			// 	data: function () {
-			// 		return {
-			// 		  count: 0
-			// 		}
-			// 	},
-			// 	template: '<div><h1>hi...</h1><button v-on:click="clickfun">{{title}} You clicked me {{ count }} times.</button><slot></slot></div>',
-			// 	methods:{
-			// 		clickfun : function () {
-			// 			this.count ++;
-			// 			this.$emit('clicknow', this.count);
-			// 		}
-			// 	}
-			// })
-			// var vm = new Vue({
-			// 	el : "#app",
-			// 	data : {
-
-			// 	},
-			// 	methods:{
-			// 		clicknow : function (e) {
-			// 			console.log(e);
-			// 		}
-			// 	}
-			// });
 		</script>
 		<style type="text/css">
 			html,

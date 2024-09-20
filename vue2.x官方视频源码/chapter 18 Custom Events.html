@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div id="app">
+				<!-- 不同于组件和prop，事件名不存在任何自动化的大小写转换 -->
+				<my-component v-on:my-event="myAlert($event)"></my-component>
+				<my-component @myevent="myAlert($event)"></my-component>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 局部注册组件
+			const MyComponent = {
+				data(){
+					return {
+						count:0
+					}
+				},
+				methods:{
+					doSomething:function(){
+						this.count++;
+						this.$emit('my-event',this.count)
+					}
+				},
+				template: `
+				 <div>
+				 <span>Custom Events</span>
+				 <button v-on:click="doSomething">You clicked me {{ count }} times.</button>
+				 </div>
+				`
+			}
+
+			// App
+			const app = new Vue({
+				el: '#app',
+				components: {
+					MyComponent
+				},
+				methods: {
+					myAlert(event){
+						alert(event)
+					}
+				}
+			})
+		</script>
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				font-size: 16px;
+			}
+
+			.container {
+				position: absolute;
+				width: 375px;
+				top: 50%;
+				left: 50%;
+				margin-left: calc(-375px/2);
+				border-radius: 0.5rem;
+				background: rgba(255, 127, 81, 0.8);
+				padding: 2rem 1.24rem;
+				overflow: scroll;
+			}
+
+			.container div {
+				margin: 0.5rem 0;
+				border-radius: 0.25rem;
+			}
+
+			.commonClass {}
+
+			.common-class {}
+
+			.active {
+				background: #23A6E9;
+			}
+
+			button,
+			a {
+				display: block;
+				margin-top: 1rem;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+			}
+
+			::-webkit-scrollbar {
+				width: 0 !important;
+				height: 0;
+			}
+		</style>
+	</body>
+</html>

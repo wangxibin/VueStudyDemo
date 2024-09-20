@@ -8,8 +8,10 @@
 	<body>
 		<div id="app" class="container">
 			<div id="example-1">
-				<!-- 监听事件 -->
+				<!-- 监听事件、内联处理器 -->
 				<button v-on:click="counter += 1">直接写表达式，数值 : {{ counter }} </button>
+				<!-- 事件处理方法 -->
+				<button v-on:dblclick="getEventObj">获取事件对象</button>
 				<!-- 事件处理方法 -->
 				<button v-on:dblclick="greet('绑定一个方法', $event)">绑定一个方法</button>
 				<!-- 内联处理器中的方法 -->
@@ -75,6 +77,9 @@
 						if (event) {
 							console.log(event)
 						}
+					},
+					getEventObj(e){
+						console.log("getEventObj()=>e", e);
 					},
 					say: function(message) {
 						alert(message)

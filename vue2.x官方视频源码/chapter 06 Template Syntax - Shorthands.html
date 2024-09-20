@@ -14,7 +14,7 @@
 			<p v-if="seen">现在你看到我了</p>
 			<a :[hrefstring]="url">...</a>
 			<div>{{reversedMessage}}</div>
-			<div>{{reversedMessage1()}}</div>
+			<div>{{reversedMessage2()}}</div>
 			<div>{{now}}</div>
 			<div>{{fullName}}</div>
 			<div @click="click1">
@@ -81,6 +81,12 @@
 					reversedMessage1: function() {
 						return this.url.split('').reverse().join('');
 					},
+					reversedMessage2: function() {
+						if(this.url){
+							return this.url.split('').reverse().join('');
+						}
+						return 'url is null'
+					},
 					getAnswer: function() {
 						if (this.question.indexOf('?') === -1) {
 							this.answer = 'Questions usually contain a question mark. ;-)'
@@ -103,6 +109,15 @@
 						this.answer = 'Waiting for you to stop typing...'
 						this.debouncedGetAnswer()
 					}
+					// 与上面的方法作用一样
+					// question(newQuestion, oldQuestion) {
+					// 	this.answer = 'Waiting for you to stop typing...'
+					// 	this.debouncedGetAnswer()
+					// }
+					// question:(newQuestion, oldQuestion)=> {
+					// 	this.answer = 'Waiting for you to stop typing...'
+					// 	this.debouncedGetAnswer()
+					// }
 				}
 			});
 		</script>
