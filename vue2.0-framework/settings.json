@@ -1,0 +1,4 @@
+{
+  "description":"编辑器配置：窗口、字体、终端、语言配置、git配置、插件配置项",
+  "eslint.format.enable": true
+}

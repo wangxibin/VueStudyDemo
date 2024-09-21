@@ -1,0 +1,87 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+# 忽略当前目录中的某些目录
+.idea/
+.ionic/
+.sourcemaps/
+.sass-cache/
+.tmp/
+.versions/
+.vscode/
+coverage/
+www/
+dist/
+dist-ssr/
+node_modules/
+tmp/
+temp/
+plugins/
+
+# 忽略以.xxx结尾的文件
+*~
+*log.txt
+*”~/.npm
+*.sw[mnpcod]
+*.log
+*.tmp
+*.tmp.*
+*.sublime-project
+*.sublime-workspace
+*.npm
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
+*.sw?
+
+# 忽略dist文件夹下的所有文件，但是不忽略dist下的子目录（重要）
+dist/*
+
+# 代表忽略所有子目录中的的内容
+**/.idea
+**/.ionic/
+**/.sourcemaps/
+**/.sass-cache/
+**/.tmp/
+**/.versions/
+**/coverage/
+**/www/
+**/dist/
+**/node_modules/
+**/tmp/
+**/temp/
+**/platforms/
+**/plugins/
+**/.vscode/
+**/npm-debug.log*
+**/yarn-error.log
+**/yarn.lock
+**/package-lock.json
+
+# 忽略根目录下的子目录以及所有子目录文件
+/t8est/unit/coverage/
+/test/e2e/reports/
+
+# 忽略以.log开头任意结尾的文件
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+selenium-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 忽略以version结束的具体的几个文件
+dev.version
+release.version
+dev.version
+release.version
+
+# 忽略所有以temp开头的文件
+temp*
+
+# 但不忽略特定的文件（这里代表不忽略README.md文件）
+!README.md
+!.vscode/extensions.json

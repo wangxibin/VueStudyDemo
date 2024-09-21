@@ -1,0 +1,101 @@
+@import './variables.scss';
+
+html,body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f4f6;
+}
+
+html, body, div, section, article, h1, h2, h3, h4, h5, ol, ul, li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+@mixin font-style {
+  font-size: $titleSize;
+  line-height: $titleHeight;
+}
+
+.gl-page-container {
+  background-color: $bgGray;
+}
+
+.gl-module-container {
+  background-color: $bgWhite;
+  margin-top: 0.26rem;
+}
+
+//messagebox
+.filterPageAlert{
+  .el-message-box__title span{
+    font-size: 0.28rem;
+  }
+  .el-message-box__content p{
+    font-size: 0.28rem;
+  }
+  .el-button--primary span{
+    font-size: 0.28rem;
+  }
+}
+.mint-indicator-mask {
+  top: 1rem !important;
+}
+.el-table__fixed-body-wrapper {
+  overflow: auto;
+}
+
+//table fixed
+.el-table__expand-icon{
+  width: 0.3rem !important;
+  height: 0.3rem !important;
+  margin-right: 0.18rem !important;
+  .el-icon-arrow-right{
+    width: 0.3rem !important;
+    height: 0.3rem !important;
+  }
+  .el-icon-arrow-right:before{
+    font-size: 0.3rem !important;
+  }
+}
+
+.caret-wrapper{
+  height: 0.55rem !important;
+  width: 0.34rem !important;
+  .sort-caret{
+    border-width: 0.1rem !important;
+    border-style: solid !important;
+    // border: 0.1rem solid transparent !important;
+  }
+}
+.el-table .el-table__header thead tr th .cell{
+  line-height: 0.55rem !important;
+  overflow: visible !important;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: rgba(0,0,0,0) !important;
+}
+.el-tabs__content {
+  overflow: auto;
+}
+.el-table__body-wrapper {
+  overflow: auto;
+}
+.el-rate__item i{
+  font-size: 0.4rem !important
+}

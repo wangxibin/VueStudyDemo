@@ -1,0 +1,17 @@
+{
+  "code": "200",
+  "msg": "success",
+  "data": {
+    "user": {
+      "userId": 100000,
+      "phoneNo": "12134515875",
+      "token": "PHS013ftMPIdP60s6",
+      "userName": "唐先生",
+      "realName": "唐先生",
+      "birthday": 1435305600000,
+      "sex": "1",
+      "avatar": "assets/img/logo.png",
+      "language": "zh_CN"
+    }
+  }
+}
