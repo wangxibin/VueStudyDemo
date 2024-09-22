@@ -3,7 +3,8 @@
 // import MyComponent from "./components/MyComponent.vue";
 // import StudyReloadPage from "./components/StudyReloadPage.vue";
 // import StudyReloadPage from "./components/StudyJsx.vue";
-import StudyWatch from "./components/StudyWatch.vue";
+// import StudyWatch from "./components/StudyWatch.vue";
+import StudyUseThis from "./components/StudyUseThis.vue";
 </script>
 
 <template>
@@ -23,7 +24,7 @@ import StudyWatch from "./components/StudyWatch.vue";
       <RouterView></RouterView>
     </KeepAlive> -->
     <!-- <HelloWorld msg="Vite + Vue" /> -->
-    <StudyWatch />
+    <StudyUseThis />
   </div>
 </template>
 
