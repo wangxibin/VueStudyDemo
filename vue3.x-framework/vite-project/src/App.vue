@@ -4,7 +4,10 @@
 // import StudyReloadPage from "./components/StudyReloadPage.vue";
 // import StudyReloadPage from "./components/StudyJsx.vue";
 // import StudyWatch from "./components/StudyWatch.vue";
-import StudyUseThis from "./components/StudyUseThis.vue";
+// import StudyUseThis from "./components/StudyUseThis.vue";
+// import StudyUseGlobalDirective from "./components/StudyUseGlobalDirective.vue";
+// import StudyRefAndReactive from "./components/StudyRefAndReactive.vue";
+import StudyHFunction from "./components/StudyHFunction.vue";
 </script>
 
 <template>
@@ -24,7 +27,19 @@ import StudyUseThis from "./components/StudyUseThis.vue";
       <RouterView></RouterView>
     </KeepAlive> -->
     <!-- <HelloWorld msg="Vite + Vue" /> -->
-    <StudyUseThis />
+    <!-- <StudyUseThis /> -->
+
+    <!-- 测试使用自定义全局directive -->
+    <!-- <StudyUseGlobalDirective /> -->
+
+    <!-- 测试Ref和Reactive -->
+    <!-- <StudyRefAndReactive /> -->
+
+    <!-- 测试watch和watchEffect -->
+    <!-- <StudyWatch /> -->
+
+    <!-- 测试 -->
+    <StudyHFunction />
   </div>
 </template>
 
